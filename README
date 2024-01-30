@@ -1,0 +1,55 @@
+Tema 1
+
+Implementarea acestei teme a început cu definirea structurilor cerute precum Node (pentru o celulă din lista dublu înlănțuită), 
+Band (ce păstrează poziția degetului și pointer spre poziția primei celule din listă), Queue (coadă realizată prin intermediul
+unei liste înlănțuite circulare) și Stack.
+
+În main am creat o variabilă numbers ce va citi din fișierul tema1.in numărul comenzilor, iar apoi prin intermediul unei instrucțiuni
+for am parcurs caracter cu caracter fiecare instrucțiune până când dau de '\n' (în ASCII tabel având valoarea 10) și am memorat-o într-un
+pointer de tip char numit commands, mai apoi inlocuind in loc de \n memorat 0.
+
+Am adaugat biblioteca <string.h> pentru a folosi functia predefinita strcmp in care compar comanda copiata in commands din fisier si o 
+transmit in functia ce o va indeplini, iar strncmp am folosit pentru comenzile cu parametru pentru a extrage doar comanda, nu si
+parametrul. Am implementat urmatoarele functii:
+
+initBand = aloc memorie pentru santinela si prima celula din banda si creez legaturile intre ele asa cum se cere in enuntul temei.
+
+freeBand = dam free la memoria alocata din banda, pentru asta am creat o copie la prima celula din lista si parcurg lista dand
+free la celula precedenta.
+
+enQueue = functia ce are ca parametri un pointer de tip Queue si pointerul commands cu cate o comanda si baga in coada comanda
+primita. In cazul in care queue e NULL cream legaturile next si previous tot la ea astfel incat e o lista inlantuita dubla 
+circulara, iar in cazul in care are deja cel putin o celula creez legaturile necesare.
+
+deQueue = functia la fel primeste ca parametri un pointer de tip Queue, pointerul commands cat si banda. Aici la fel creez o copie
+pentru prima celula din coada si ma mut pe a doua, totodata creand legaturile necesare, ca mai apoi sa compar continutul copiei primei 
+celule si sa efectuez operatiile in dependenta de comanda ce o contine.
+
+addinStack = primesc in calitate de parametri stiva si adresa celulei pe care e plasat degetul. Aloc memorie pentru celula din stiva
+si ia valoarea adresei celulei pe care e plasat degetul. 
+
+Spre exemplu, pentru MOVE_LEFT daca pozitia degetului nu e pe prima celula atunci se muta la celula din stanga, in caz ca nu e adevarata
+instructiunea if pozitia degetului ramane la fel.
+
+Pentru MOVE_RIGHT verific daca celula next pointeaza catre NULL atunci creez una noua ce va contine '#' si pozitia degetului se actualizeaza
+la noua celula.
+
+Pentru MOVE_LEFT_CHAR, memorez pozitia degetului ca sa nu ii schimb valoarea adevarata si parcurg printr-un for, adauag conditia daca ultimul
+caracter din comanda mea e egal cu continutul unei celule atunci pozitia degetului se actualizeaza cu copia lui. In caz ca s-a ajuns pana la
+prima celula si continutul nu corespunde cu parametrul cautat pozitia degetului ramane aceeasi ca la inceput.
+
+Pentru MOVE_RIGHT_CHAR, parcurg for-ul fara copie iar la valoarea gasita printr-un break iese din instructiune si pozitia degetului ramane ultima
+ce a fost schimbata in for. Dupa ce iese din for si nu s-a gasit nicio potrivire la fel creez o noua celula la dreapta ce contine caracterul '#'
+si ii creez legaturile.
+
+Pentru comanda WRITE doar ii atribui valorii unde sta degetul parametrul ce il contine comanda WRITE.
+
+Pentru INSERT_LEFT daca degetul nu se afla la prima celula creez una noua, ii adaug parametrul in celula si ii construiesc legaturile, mai apoi
+actualizez pozitia degetului catre celula nou creata. In caz contrar imi afiseaza 'ERROR'.
+Pentru INSERT_RIGHT fac aproape acelasi algoritm. 
+Mai apoi celulei memorate ii dau free la sfarsit in tot aceasta functie.
+
+show_list = functia ce primeste ca parametri banda si fisierul tema1.out pentru ca e functie ce trebuie efectuata momentan, si printeaza lista,
+unde pozitia degetului e luata intre caracterele '|'.
+
+show_current = functia ce primeste ca parametri banda si fisierul tema1.out si afiseaza doar caracterul unde pointeaza pozitia degetului.
